@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang = "ru">
+<head>
+
+
+    <meta charset ="UTF-8">
+    <meta name ="viewport" content = "width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie_edge">
+<title>
+FinGram
+</title>
+
+<style>
+red{
+color:red;
+}
+green
+{
+color:green;
+}
+input
+{
+font-size: 1.2em;;
+border-radius: 20px;
+	border: 3px solid rgb(150,150,150);
+}
+button:focus {
+    outline: none;
+}
+    .cbox
+    {
+margin:0 auto;
+width:50%;
+color: #333333;
+background: #FFFFFF;
+text-shadow: 2px 2px 0px #000000, 5px 4px 0px rgba(0,0,0,0.15);
+        background-color: rgb(255,255,255);
+		    padding: 10px;
+			border-radius: 20px;
+			border: 5px solid rgb(0,0,0);
+
+	//    position: absolute;
+   // top: 50%;
+    //left: 50%;
+  //  transform: translate(-50%, -50%);
+	font-size: 2.2em;;
+	color: rgb(31,184,250);
+    }
+	html {
+
+}
+.qbox
+{
+font-size: 2.5em;;
+border-radius: 15px;
+background-color: rgb(135,208,255);
+left: 50%;
+color: #FFFFFF;
+background: #0e8dbc;
+text-shadow: 0 1px 0 #CCCCCC, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 10px 10px rgba(0,0,0,.2), 0 20px 20px rgba(0,0,0,.15);
+ width:80%;
+ height:100%;
+}
+
+</style>
+</head>
+<body>
+
+<div class = "cbox">
+    <st id = "maind">
+
+<input name="..." type="text" maxlength="512" placeholder = "Имя" id = "name" required/>
+<br>
+<input name="..." type="text" maxlength="512"placeholder= "Фамилия" id = "family" required/>
+<br>
+<input name="..." type="text" maxlength="512" placeholder="ID" id = "id" required/>
+<br>
+<center>
+<br>
+<button id = "Войти" onclick="goon()">
+Вход
+</button>
+</center>
+    </st>
+  <!--  <input name="..." type="text" maxlength="512" placeholder="Ответ" id = "task" /> -->
+<br>
+<center>
+<br>
+</center>
+</div>
+<script>
+/////////////////////////////
+
+////////////////////////////
+
+	var task;
+    var righta = 0;
+    var maind =  document.getElementById('maind');
+    var full;
+    function next()
+    {
+        var answ =  document.getElementById('task').value;
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('POST', 'http://127.0.0.1:5000/');
+               xhr.setRequestHeader("Content-Type", "application/json");
+            var data = JSON.stringify({ "name": full,"type":'r',"answ":answ});
+            xhr.send(data);
+
+            xhr.onreadystatechange = function ()
+            {
+                if (xhr.readyState === 4 && xhr.status === 200)
+                {
+
+                    // Print received data from server
+                    maind.innerHTML = this.responseText;
+                }
+            }
+    }
+    function goon()
+    {
+        var name =  document.getElementById('name').value;
+        var family =  document.getElementById('family').value;
+        var id =  document.getElementById('id').value;
+        if(name == "" || family == "" || id == "")
+        {
+
+        }
+        else
+        {
+            full = name+family+id;
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('POST', 'http://127.0.0.1:5000/');
+               xhr.setRequestHeader("Content-Type", "application/json");
+            var data = JSON.stringify({ "name": full,"type":'e'});
+            xhr.send(data);
+
+            xhr.onreadystatechange = function ()
+            {
+                if (xhr.readyState === 4 && xhr.status === 200)
+                {
+
+                    // Print received data from server
+                    maind.innerHTML = this.responseText;
+                }
+            }
+
+    }    }
+
+
+
+    function mainclick()
+    {
+        task = document.getElementById('task');
+    }
+
+</script>
+</body>
+
+
+</html>
